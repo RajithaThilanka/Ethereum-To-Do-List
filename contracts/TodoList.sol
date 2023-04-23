@@ -7,17 +7,23 @@ contract TodoList {
   struct Task{
      uint id;
      string content;
-     bool compiled;
+     bool completed;
   }
   mapping(uint =>Task)public tasks;
 
-   constructor()public{
-         createTask("Create TodoList");
-   }
-
-  function createTask(string memory _content) public{
-     taskCount++;
-     tasks[taskCount]=Task(taskCount, _content,false);
+  constructor() public {
+    createTask("Create TodoList");
   }
 
-}task=await todoList.tasks(1)
+  function createTask(string memory _content) public {
+    taskCount++;
+    tasks[taskCount] = Task(taskCount, _content, false);
+  }
+
+  function deleteTask(uint _id) public {
+    require(_id <= taskCount && _id > 0, "Invalid task ID");
+    delete tasks[_id];
+    taskCount--;
+  }
+  
+}
